@@ -2,6 +2,8 @@ require('dotenv').config();
 import axios, { AxiosResponse } from 'axios';
 import { JSDOM } from 'jsdom';
 import {queue} from 'async';
+import path = require('path');
+import fs = require('fs');
 
 
 const EVENTS:string = "https://roswellfirelabs.org/events?EventViewMode=1&EventListViewMode=2&SelectedDate=8/15/2020&CalendarViewType=0"
@@ -21,7 +23,9 @@ const CalendarCrawler = queue( (task: IEventLink, cb)=>{
   axios.get(url)
   .then((resp)=>{
     console.log(`Fetched data for ${task.id}, length: ${resp.data.length}`)
-    cb();
+    const ics_path = path.join(process.cwd(),'ics',`${task.id}.ics`)
+    fs.writeFileSync(ics_path,resp.data)
+    cb()
   })
   .catch( err =>{
     console.log(`Fetch failed for event id: ${task.id}, ${err.message}`)
