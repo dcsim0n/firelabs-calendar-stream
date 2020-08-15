@@ -6,7 +6,7 @@ import {queue} from 'async';
 
 const EVENTS:string = "https://roswellfirelabs.org/events?EventViewMode=1&EventListViewMode=2&SelectedDate=8/15/2020&CalendarViewType=0"
 const EVENT_LINK_SELECTOR:string = ".EventListCalendar a";
-const EVENT_ID_REGEX = /https:\/\/roswellfirelabs\.org\/event-(\d{7})/
+const EVENT_ID_REGEX = /https:\/\/roswellfirelabs\.org\/event-(\d{6,10})/
 
 interface IEventLink{
   id: number,
@@ -28,8 +28,6 @@ const CalendarCrawler = queue( (task: IEventLink, cb)=>{
     cb(err)
   })
 }, 4);
-
-
 
 axios.get(EVENTS)
 .then((resp)=>{
