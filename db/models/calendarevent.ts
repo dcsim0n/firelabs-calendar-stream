@@ -13,12 +13,12 @@ export class CalendarEvent extends Model<CalendarEventAttributes, CalendarEventC
   public id!: number
   public eventId!: number
   public dataHash!: string
-  public icsData!: string
+  public icsData?: string
 }
 
-export interface CalendarEventCreationAttributes extends Optional<CalendarEventAttributes, "id">{};
+export interface CalendarEventCreationAttributes extends Optional<CalendarEventAttributes, "id" >{};
 
-export function initCalendarEvent(sequelize: Sequelize): CalendarEvent{
+export function initCalendarEvent(sequelize: Sequelize): typeof CalendarEvent{
   
   CalendarEvent.init({
     id:{
@@ -31,14 +31,14 @@ export function initCalendarEvent(sequelize: Sequelize): CalendarEvent{
     dataHash: { type: DataTypes.STRING, allowNull: false}
   }, {sequelize})
 
-  CalendarEvent.beforeCreate((event,options)=>{
-    if(event.dataHash == undefined || null){
+  // CalendarEvent.beforeCreate((event,options)=>{
+  //   if(event.dataHash == undefined || null){
       
-      const md5 = crypto.createHash('md5');
-      const hashStr = md5.update(event.icsData).digest('hex');
-      event.dataHash = hashStr;
-    }
-  })
+  //     const md5 = crypto.createHash('md5');
+  //     const hashStr = md5.update(event.icsData).digest('hex');
+  //     event.dataHash = hashStr;
+  //   }
+  // })
   
   return CalendarEvent;
 }
