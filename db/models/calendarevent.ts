@@ -1,15 +1,17 @@
 'use strict';
-import { Sequelize, Model, DataTypes, ModelCtor} from 'sequelize'
+import { Sequelize, Model, DataTypes, ModelCtor, ModelDefined, Optional} from 'sequelize'
 
-interface CalendarEventInstance extends Model{
+export interface CalendarEventAttributes {
   id: number,
   eventId: number,
   icsData: string,
   dataHash: string
 }
 
-export function initCalendarEvent(sequelize: Sequelize):ModelCtor<CalendarEventInstance>{
-  const CalendarEvent = sequelize.define<CalendarEventInstance>(
+export interface CalendarEventCreationAttributes extends Optional<CalendarEventAttributes, "id">{};
+
+export function initCalendarEvent(sequelize: Sequelize){
+  const CalendarEvent: ModelDefined<CalendarEventAttributes, CalendarEventCreationAttributes> = sequelize.define(
     'CalendarEvent',
     {
       id: {type: DataTypes.NUMBER, autoIncrement: true, primaryKey: true},
