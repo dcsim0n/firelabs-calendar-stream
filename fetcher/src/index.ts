@@ -5,6 +5,7 @@ import {queue} from 'async';
 import path = require('path');
 import fs = require('fs');
 import models from '../../db/models';
+import crypto = require('crypto');
 
 
 const EVENTS:string = "https://roswellfirelabs.org/events?EventViewMode=1&EventListViewMode=2&SelectedDate=8/15/2020&CalendarViewType=0"
@@ -16,16 +17,40 @@ interface IEventLink{
   url: string
 }
 
+function hashFromStr(data:string):string{
+  const md5 = crypto.createHash('md5');
+  md5.update(data);
+  return md5.digest('hex');
+}
+
 const CalendarCrawler = queue( (task: IEventLink, cb)=>{
   const url = `https://roswellfirelabs.org/event-${task.id}/Export`;
   console.log(`Fetching url: ${url}`)
+  let dataHash =  '';
+  let icsData = '';
   axios.get(url)
   .then((resp)=>{
     console.log(`Fetched data for ${task.id}, length: ${resp.data.length}`)
-    models.CalendarEvent.create({eventId: task.id, icsData: resp.data})
-    .then( ()=>{
-      cb()
-    })
+    dataHash = hashFromStr(resp.data);
+    icsData = '';
+    const eventObject = {
+      where: {eventId: task.id},
+      defaults:{
+        eventId: task.id,
+        icsData,
+        dataHash
+      }
+    }
+    return models.CalendarEvent.findOrCreate(eventObject)
+  })
+  .then(([event, createdYN])=>{
+    if(event.dataHash !== dataHash){
+      event.update({
+        dataHash,
+        icsData
+      })
+    }
+    cb()
   })
   .catch( err =>{
     console.log(`Fetch failed for event id: ${task.id}, ${err.message}`)
