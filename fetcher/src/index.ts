@@ -4,6 +4,7 @@ import { JSDOM } from 'jsdom';
 import {queue} from 'async';
 import path = require('path');
 import fs = require('fs');
+import models from '../../db/models';
 
 
 const EVENTS:string = "https://roswellfirelabs.org/events?EventViewMode=1&EventListViewMode=2&SelectedDate=8/15/2020&CalendarViewType=0"
@@ -15,17 +16,16 @@ interface IEventLink{
   url: string
 }
 
-
-
 const CalendarCrawler = queue( (task: IEventLink, cb)=>{
   const url = `https://roswellfirelabs.org/event-${task.id}/Export`;
   console.log(`Fetching url: ${url}`)
   axios.get(url)
   .then((resp)=>{
     console.log(`Fetched data for ${task.id}, length: ${resp.data.length}`)
-    const ics_path = path.join(process.cwd(),'ics',`${task.id}.ics`)
-    fs.writeFileSync(ics_path,resp.data)
-    cb()
+    models.CalendarEvent.create({eventId: task.id, icsData: resp.data})
+    .then( ()=>{
+      cb()
+    })
   })
   .catch( err =>{
     console.log(`Fetch failed for event id: ${task.id}, ${err.message}`)

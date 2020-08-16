@@ -1,24 +1,23 @@
 'use strict';
-const { Model } = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
-  class CalendarEvent extends Model {
-    // /**
-    //  * Helper method for defining associations.
-    //  * This method is not a part of Sequelize lifecycle.
-    //  * The `models/index` file will call this method automatically.
-    //  */
-    static associate(models) {
-      // define association here
-    
+import { Sequelize, Model, DataTypes, ModelCtor} from 'sequelize'
+
+interface CalendarEventInstance extends Model{
+  id: number,
+  eventId: number,
+  icsData: string,
+  dataHash: string
+}
+
+export function initCalendarEvent(sequelize: Sequelize):ModelCtor<CalendarEventInstance>{
+  const CalendarEvent = sequelize.define<CalendarEventInstance>(
+    'CalendarEvent',
+    {
+      id: {type: DataTypes.NUMBER, autoIncrement: true, primaryKey: true},
+      eventId: DataTypes.NUMBER,
+      icsData: DataTypes.STRING,
+      dataHash: DataTypes.STRING
     }
-  };
-  CalendarEvent.init({
-    eventId: DataTypes.NUMBER,
-    icsData: DataTypes.STRING,
-    dataHash: DataTypes.STRING
-  }, {
-    sequelize,
-    modelName: 'CalendarEvent',
-  });
+  )
+
   return CalendarEvent;
-};
+}
