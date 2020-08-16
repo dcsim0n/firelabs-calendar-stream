@@ -13,7 +13,7 @@ export class CalendarEvent extends Model<CalendarEventAttributes, CalendarEventC
   public id!: number
   public eventId!: number
   public dataHash!: string
-  public icsData?: string
+  public icsData!: string
 }
 
 export interface CalendarEventCreationAttributes extends Optional<CalendarEventAttributes, "id" >{};
