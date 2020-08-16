@@ -32,7 +32,7 @@ const CalendarCrawler = queue( (task: IEventLink, cb)=>{
   .then((resp)=>{
     console.log(`Fetched data for ${task.id}, length: ${resp.data.length}`)
     dataHash = hashFromStr(resp.data);
-    icsData = '';
+    icsData = resp.data;
     const eventObject = {
       where: {eventId: task.id},
       defaults:{
@@ -44,7 +44,8 @@ const CalendarCrawler = queue( (task: IEventLink, cb)=>{
     return models.CalendarEvent.findOrCreate(eventObject)
   })
   .then(([event, createdYN])=>{
-    if(event.dataHash !== dataHash){
+    if(event.dataHash !==dataHash){
+      console.log(`Hash ${event.dataHash} does not match ${dataHash} updating row`)
       event.update({
         dataHash,
         icsData
