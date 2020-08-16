@@ -2356,6 +2356,11 @@ iconv-lite@0.4.24, iconv-lite@^0.4.4:
   dependencies:
     safer-buffer ">= 2.1.2 < 3"
 
+ics-to-json@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/ics-to-json/-/ics-to-json-1.0.0.tgz#aceba0d995ecbd769069d8c033eb281f926beb98"
+  integrity sha512-J2bvEGr2BKsdV7WTmOKXr1ksFeujR+dFwM5yxWu3cODq3HduwcIZQjSsYinmSpa3FxlvzVqtfuBbw7Q/g0FWGw==
+
 ignore-by-default@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/ignore-by-default/-/ignore-by-default-1.0.1.tgz#48ca6d72f6c6a3af00a9ad4ae6876be3889e2b09"
