@@ -6,8 +6,8 @@ import {Sequelize} from 'sequelize';
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/config.json')[env];
-import {initCalendarEvent} from './calendarevent';
-
+import {initCalendarEvent} from './calendarevent'
+import { DbInterface } from '..';
 let sequelize: any;
 if (config.use_env_variable) {
   sequelize = new Sequelize(process.env[config.use_env_variable], config);
@@ -15,16 +15,9 @@ if (config.use_env_variable) {
   sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
 
-const db:any ={
-  sequelize,
-  Sequelize,
-  CalendarEvent: initCalendarEvent(sequelize)
+const db: DbInterface = {
+ sequelize,
+ CalendarEvent: initCalendarEvent(sequelize)
 }
-
-Object.keys(db).forEach(modelName => {
-  if (db[modelName].associate) {
-    db[modelName].associate(db);
-  }
-});
 
 export default db;
