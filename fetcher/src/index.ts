@@ -59,37 +59,41 @@ const CalendarCrawler = queue( (task: IEventLink, cb)=>{
   })
 }, 4);
 
-axios.get(EVENTS)
-.then((resp)=>{
-  const events_page = new JSDOM(resp.data)
+function crawlEvents(){
+  axios.get(EVENTS)
+  .then((resp)=>{
+    const events_page = new JSDOM(resp.data)
 
-  const link_nodes = <NodeListOf<HTMLAnchorElement>> events_page.window.document.querySelectorAll(EVENT_LINK_SELECTOR);
-  const links = new Map<number,IEventLink>()
-  for (let i = 0; i < link_nodes.length; i++) {
-    const eventUrl = link_nodes[i].href;
-    const id_str = eventUrl.match(EVENT_ID_REGEX);
-    if(id_str){
-      const id = parseInt(id_str[1]);
-      links.set(id, {id: id, url: eventUrl });
+    const link_nodes = <NodeListOf<HTMLAnchorElement>> events_page.window.document.querySelectorAll(EVENT_LINK_SELECTOR);
+    const links = new Map<number,IEventLink>()
+    for (let i = 0; i < link_nodes.length; i++) {
+      const eventUrl = link_nodes[i].href;
+      const id_str = eventUrl.match(EVENT_ID_REGEX);
+      if(id_str){
+        const id = parseInt(id_str[1]);
+        links.set(id, {id: id, url: eventUrl });
+      }
     }
-  }
-  console.log(links);
-  return links
-})
-.then( links =>{
+    console.log(links);
+    return links
+  })
+  .then( links =>{
 
-  // for each link
-  links.forEach(event =>{
-    CalendarCrawler.push(event)
-  })
-  
-  console.log(`queue length is: ${CalendarCrawler.length()}`)
-  // fetch the event page
-  // parse the ics link from the event page
-  // save and/or download the ics file
-  // don't duplicate work
-  // maybe should de-dup the links array before getting here
-  return CalendarCrawler.drain(()=>{
-    console.log("Finished fetching");
-  })
-});
+    // for each link
+    links.forEach(event =>{
+      CalendarCrawler.push(event)
+    })
+    
+    console.log(`queue length is: ${CalendarCrawler.length()}`)
+    // fetch the event page
+    // parse the ics link from the event page
+    // save and/or download the ics file
+    // don't duplicate work
+    // maybe should de-dup the links array before getting here
+    return CalendarCrawler.drain(()=>{
+      console.log("Finished fetching");
+    })
+  });
+}
+crawlEvents();
+setInterval(crawlEvents,3600000);
