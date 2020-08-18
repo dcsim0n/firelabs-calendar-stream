@@ -1,0 +1,6 @@
+{
+  "REFRESH_RATE": 3600000,
+  "CRAWL_URL": "https://roswellfirelabs.org/events?EventViewMode=1&EventListViewMode=2&SelectedDate=8/15/2020&CalendarViewType=0",
+  "QUERY_SELECTOR": ".EventListCalendar a",
+  "WORKERS": 4
+}
