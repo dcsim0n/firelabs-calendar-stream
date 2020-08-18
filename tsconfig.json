@@ -12,10 +12,9 @@
     // "jsx": "preserve",                     /* Specify JSX code generation: 'preserve', 'react-native', or 'react'. */
     // "declaration": true,                   /* Generates corresponding '.d.ts' file. */
     // "declarationMap": true,                /* Generates a sourcemap for each corresponding '.d.ts' file. */
-    // "sourceMap": true,                     /* Generates corresponding '.map' file. */
-    // "outFile": "./",                       /* Concatenate and emit output to single file. */
-    // "outDir": "./",                        /* Redirect output structure to the directory. */
-    // "rootDir": "./",                       /* Specify the root directory of input files. Use to control the output directory structure with --outDir. */
+    "sourceMap": true,                     /* Generates corresponding '.map' file. */
+    // "outFile": "./dist/index.js",                       /* Concatenate and emit output to single file. */
+    // "rootDir": "./api/src/",                       /* Specify the root directory of input files. Use to control the output directory structure with --outDir. */
     // "composite": true,                     /* Enable project compilation */
     // "tsBuildInfoFile": "./",               /* Specify file to store incremental compilation information */
     // "removeComments": true,                /* Do not emit comments to output. */
@@ -64,6 +63,11 @@
 
     /* Advanced Options */
     "skipLibCheck": true,                     /* Skip type checking of declaration files. */
-    "forceConsistentCasingInFileNames": true  /* Disallow inconsistently-cased references to the same file. */
-  }
+    "forceConsistentCasingInFileNames": true, /* Disallow inconsistently-cased references to the same file. */
+    "outDir": "./dist"
+  },
+
+  "include": ["./api/src/**/*", "./db/models/**/*", "fetcher/**/*"],
+  "exclude": ["__tests__"]
+  
 }

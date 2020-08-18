@@ -7,9 +7,5 @@ const config = require('./fetcher.json');
 const crawler = new Crawler(config)
 
 
-crawler.start();
+export default crawler;
 
-process.on('SIGINT', ()=>{
-  console.log("Exiting, cleaning up...")
-  crawler.stop();
-})
