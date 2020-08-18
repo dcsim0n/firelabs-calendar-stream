@@ -22,7 +22,7 @@ export function initCalendarEvent(sequelize: Sequelize): typeof CalendarEvent{
   
   CalendarEvent.init({
     id:{
-      type: DataTypes.NUMBER,
+      type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true
     },
