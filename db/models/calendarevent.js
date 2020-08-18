@@ -13,7 +13,7 @@ function initCalendarEvent(sequelize) {
             autoIncrement: true,
             primaryKey: true
         },
-        eventId: { type: sequelize_1.DataTypes.NUMBER, allowNull: false },
+        eventId: { type: sequelize_1.DataTypes.INTEGER, allowNull: false },
         icsData: { type: sequelize_1.DataTypes.TEXT, allowNull: false },
         dataHash: { type: sequelize_1.DataTypes.STRING, allowNull: false }
     }, { sequelize });

@@ -26,7 +26,7 @@ export function initCalendarEvent(sequelize: Sequelize): typeof CalendarEvent{
       autoIncrement: true,
       primaryKey: true
     },
-    eventId: { type: DataTypes.NUMBER, allowNull: false },
+    eventId: { type: DataTypes.INTEGER, allowNull: false },
     icsData: { type: DataTypes.TEXT, allowNull: false },
     dataHash: { type: DataTypes.STRING, allowNull: false}
   }, {sequelize})
