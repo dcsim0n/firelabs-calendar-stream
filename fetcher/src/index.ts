@@ -6,6 +6,4 @@ const config = require('./fetcher.json');
 
 const crawler = new Crawler(config)
 
-
-export default crawler;
-
+crawler.start();
