@@ -9,7 +9,7 @@
     "tsc": "tsc",
     "start:fetcher": "nodemon fetcher/src/index.ts",
     "start:api": "nodemon api/src/index.ts",
-    "sequelize-cli": "sequelize-cli"
+    "sequelize-cli": "./node_modules/.bin/sequelize-cli"
   },
   "devDependencies": {
     "@types/async": "^3.2.3",
