@@ -8,7 +8,7 @@
     "storage": "./test.db"
   },
   "production": {
-    "use_env_variable": "PSQL_URI",
+    "use_env_variable": "DATABASE_URL",
     "dialect": "postgres",
     "operatorAlias": false,
     "logging": false
