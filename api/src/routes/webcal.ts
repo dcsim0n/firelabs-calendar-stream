@@ -7,7 +7,7 @@ import icsToJson from 'ics-to-json';
 const router = express.Router();
 
 router.get('/api/1/events.ics',function(req,resp){
-  let respStr = "BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//Roswell Firelabs//Event Calendar//EN\nMETHOD:PUBLISH\nCALSCALE:GREGORIAN\nX-WR-CALNAME:Events\n"
+  let respStr = "BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//Roswell Firelabs//Event Calendar//EN\nMETHOD:PUBLISH\nCALSCALE:GREGORIAN\nX-WR-CALNAME:Events \nX-WR-TIMEZONE:UTC\n"
   models.CalendarEvent.findAll()
   .then( allEvents =>{
     allEvents.forEach( event =>{
