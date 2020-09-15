@@ -8,7 +8,7 @@ const express_1 = __importDefault(require("express"));
 const models_1 = __importDefault(require("../../../db/models"));
 const router = express_1.default.Router();
 router.get('/api/1/events.ics', function (req, resp) {
-    let respStr = "BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//Roswell Firelabs//Event Calendar//EN\nMETHOD:PUBLISH\nCALSCALE:GREGORIAN\nX-WR-CALNAME:Events \nX-WR-TIMEZONE:America/New_York\n";
+    let respStr = "BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//Roswell Firelabs//Event Calendar//EN\nMETHOD:PUBLISH\nCALSCALE:GREGORIAN\nX-WR-CALNAME:Events\n";
     models_1.default.CalendarEvent.findAll()
         .then(allEvents => {
         allEvents.forEach(event => {
