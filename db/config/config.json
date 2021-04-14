@@ -11,9 +11,6 @@
     "use_env_variable": "DATABASE_URL",
     "dialect": "postgres",
     "operatorAlias": false,
-    "logging": false,
-    "ssl": {
-      "rejectUnauthorized": false
-    }
+    "logging": false
   }
 }
